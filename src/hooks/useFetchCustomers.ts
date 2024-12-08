@@ -1,8 +1,6 @@
-import { useState, useEffect } from "react";
+import { useCallback, useState, useEffect } from "react";
 import { Customer } from "../types";
-
-const CUSTOMERS_URL =
-  "https://parloafrontendchallenge.z6.web.core.windows.net/customers.json";
+import { CUSTOMERS_URL } from "../constants";
 
 const waitAsync = async (msTime: number = 1500) =>
   new Promise((res) => setTimeout(res, msTime));
@@ -20,7 +18,7 @@ export const useFetchCustomers: UseFetchCustomers = () => {
   const [error, setError] = useState<string | null>(null);
   const controller = new AbortController();
 
-  const getCustomers = async () => {
+  const getCustomers = useCallback(async () => {
     setIsLoading(true);
 
     try {
@@ -44,7 +42,8 @@ export const useFetchCustomers: UseFetchCustomers = () => {
     } finally {
       setIsLoading(false);
     }
-  };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useEffect(() => {
     getCustomers();
@@ -52,7 +51,7 @@ export const useFetchCustomers: UseFetchCustomers = () => {
     return () => {
       // controller.abort();
     };
-  }, []);
+  }, [getCustomers]);
 
   return [customers, isLoading, error, controller];
 };

@@ -1,26 +1,31 @@
 import { Fragment, useState } from "react";
-import Toolbar from "@mui/material/Toolbar";
-import IconButton from "@mui/material/IconButton";
-import Tooltip from "@mui/material/Tooltip";
-import FilterListIcon from "@mui/icons-material/FilterList";
-import Box from "@mui/material/Box";
-import Popper from "@mui/material/Popper";
-import Button from "@mui/material/Button";
-import Stack from "@mui/material/Stack";
-import TextField from "@mui/material/TextField";
 import { ClickAwayListener } from "@mui/base/ClickAwayListener";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import IconButton from "@mui/material/IconButton";
+import FilterListIcon from "@mui/icons-material/FilterList";
+import Popper from "@mui/material/Popper";
+import Stack from "@mui/material/Stack";
+import Toolbar from "@mui/material/Toolbar";
+import Tooltip from "@mui/material/Tooltip";
+import TextField from "@mui/material/TextField";
+
+type TableToolbarProps = {
+  onAddNewCustomerClick: (event: React.MouseEvent<HTMLElement>) => void;
+  onFilterInputChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  filterInputValue: string;
+};
 
 export const TableToolbar = ({
   onAddNewCustomerClick,
   onFilterInputChange,
   filterInputValue,
-}: any) => {
+}: TableToolbarProps): React.JSX.Element => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const isPopperOpen = Boolean(anchorEl);
   const id = isPopperOpen ? "simple-popper" : undefined;
 
-  // event: React.MouseEvent<HTMLElement>
-  const handleFilterClick = (event: any) => {
+  const handleFilterClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(anchorEl ? null : event.currentTarget);
   };
 
@@ -32,7 +37,7 @@ export const TableToolbar = ({
         anchorEl={anchorEl}
         sx={{ zIndex: 10 }}
       >
-        <ClickAwayListener onClickAway={handleFilterClick}>
+        <ClickAwayListener onClickAway={() => setAnchorEl(null)}>
           <Box
             sx={{
               border: "1px solid #cbcbcb",
