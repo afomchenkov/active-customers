@@ -1,26 +1,60 @@
-// import { Fragment } from "react";
+import Box from "@mui/material/Box";
+import Collapse from "@mui/material/Collapse";
+import Divider from "@mui/material/Divider";
+import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import Divider from "@mui/material/Divider";
-import Box from "@mui/material/Box";
-import Collapse from "@mui/material/Collapse";
-import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
+import { Customer, CustomerProject } from "../../types";
+import { parseDateString } from "../../utils";
 
-import { Customer } from "../../types";
+type CustomersTableProjectsProps = {
+  row: Customer;
+  open: boolean;
+};
 
-const parseDateString = (date: string) => new Date(date).toUTCString();
+type ProjectsTableProps = {
+  projects: CustomerProject[];
+};
+
+const ProjectsTable = ({ projects }: ProjectsTableProps): React.JSX.Element => {
+  return (
+    <Table sx={{ marginTop: 1 }} size="small" aria-label="purchases">
+      <TableHead>
+        <TableRow>
+          <TableCell>Project name</TableCell>
+          <TableCell>Contact</TableCell>
+          <TableCell align="right">Start date</TableCell>
+          <TableCell align="right">End date</TableCell>
+        </TableRow>
+      </TableHead>
+      <TableBody>
+        {projects.map((project) => (
+          <TableRow key={project.id}>
+            <TableCell component="th" scope="row">
+              {project.name}
+            </TableCell>
+            <TableCell>{project.contact}</TableCell>
+            <TableCell align="right">
+              {parseDateString(project.start_date)}
+            </TableCell>
+            <TableCell align="right">
+              {parseDateString(project.end_date)}
+            </TableCell>
+          </TableRow>
+        ))}
+      </TableBody>
+    </Table>
+  );
+};
 
 export const CustomersTableProjects = ({
   row,
   open,
-}: {
-  row: Customer;
-  open: boolean;
-}) => {
+}: CustomersTableProjectsProps): React.JSX.Element => {
   const { about, projects } = row;
 
   return (
@@ -39,32 +73,7 @@ export const CustomersTableProjects = ({
               Projects
             </Typography>
             {!!projects.length ? (
-              <Table sx={{ marginTop: 1 }} size="small" aria-label="purchases">
-                <TableHead>
-                  <TableRow>
-                    <TableCell>Project name</TableCell>
-                    <TableCell>Contact</TableCell>
-                    <TableCell align="right">Start date</TableCell>
-                    <TableCell align="right">End date</TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {projects.map((project) => (
-                    <TableRow key={project.id}>
-                      <TableCell component="th" scope="row">
-                        {project.name}
-                      </TableCell>
-                      <TableCell>{project.contact}</TableCell>
-                      <TableCell align="right">
-                        {parseDateString(project.start_date)}
-                      </TableCell>
-                      <TableCell align="right">
-                        {parseDateString(project.end_date)}
-                      </TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
+              <ProjectsTable projects={projects} />
             ) : (
               <Paper
                 elevation={0}

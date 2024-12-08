@@ -1,20 +1,28 @@
+import { ReactNode } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import Box from "@mui/material/Box";
 import { CheckboxField } from "./CheckboxField";
 import { SelectField } from "./SelectField";
 import { TextField } from "./TextField";
 import { TextAreaField } from "./TextAreaField";
+import { Customer } from "../../types";
 import { industriesOptions } from "../../constants";
 
-type FormInputs = any;
-// {
-//   example: string
-//   exampleRequired: string
-// }
+type EditCustomerFormProps = {
+  data: Customer;
+  formActions: ReactNode;
+  onFormSubmit: (data: Customer) => void;
+};
 
-export const EditCustomerForm = ({ formActions, data, onFormSubmit }: any) => {
+type EditFormInputs = Omit<Customer, "id" | "projects">;
+
+export const EditCustomerForm = ({
+  formActions,
+  data,
+  onFormSubmit,
+}: EditCustomerFormProps): React.JSX.Element => {
   const { company, about, industry, isActive } = data;
-  const { handleSubmit, control } = useForm<FormInputs>({
+  const { handleSubmit, control } = useForm<EditFormInputs>({
     defaultValues: {
       company,
       industry,
@@ -23,7 +31,7 @@ export const EditCustomerForm = ({ formActions, data, onFormSubmit }: any) => {
     },
   });
 
-  const onSubmit: SubmitHandler<FormInputs> = (updatedData: any) => {
+  const onSubmit: SubmitHandler<EditFormInputs> = (updatedData) => {
     onFormSubmit({ ...data, ...updatedData });
   };
 

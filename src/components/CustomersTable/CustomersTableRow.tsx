@@ -9,13 +9,13 @@ import Stack from "@mui/material/Stack";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import { CustomersTableProjects } from "./CustomersTableProjects";
-import { DeleteCustomerModal } from "../DeleteCustomerModal";
+import { DeleteCustomerModal } from "../Modals/DeleteCustomerModal";
 import { useCustomersContext } from "../../state/customersContext";
 import { capitalize } from "../../utils";
 import { Customer } from "../../types";
 
 import { EditCustomerForm } from "../Forms/EditCustomerForm";
-import { EditCustomerModal } from "../EditCustomerModal";
+import { EditCustomerModal } from "../Modals/EditCustomerModal";
 
 const DeleteCustomerModalButtons = ({ onCancel, onDelete }: any) => {
   return (

@@ -1,9 +1,23 @@
+import { Controller, Control } from "react-hook-form";
 import TextInput from "@mui/material/TextField";
-import { Controller } from "react-hook-form";
 
-export const TextField = (props: any) => {
-  const { name, label, control, variant, color, rules } = props;
+type TextFieldProps = {
+  name: string;
+  label: string;
+  control: Control<any>;
+  color?: "primary" | "secondary" | "info" | "success" | "warning";
+  variant?: "filled" | "outlined" | "standard";
+  rules?: Object;
+};
 
+export const TextField = ({
+  color,
+  name,
+  label,
+  control,
+  rules,
+  variant,
+}: TextFieldProps): React.JSX.Element => {
   return (
     <Controller
       name={name}
@@ -24,4 +38,4 @@ export const TextField = (props: any) => {
       }}
     />
   );
-}
+};

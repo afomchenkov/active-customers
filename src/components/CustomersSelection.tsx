@@ -1,18 +1,23 @@
-import { useState, useCallback } from "react";
+import { FormEvent, useState, useCallback } from "react";
 import { v4 as uuid } from "uuid";
 import Container from "@mui/material/Container";
 import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
-import Paper from "@mui/material/Paper";
-import { TableToolbar } from "./CustomersTable/TableToolbar";
-import { CustomersTable } from "./CustomersTable/CustomersTable";
-import { useCustomersContext } from "../state/customersContext";
 import { AddCustomerForm } from "./Forms/AddCustomerForm";
-import { AddCustomerModal } from "./AddCustomerModal";
-import { Loader } from './Loader';
+import { AddCustomerModal } from "./Modals/AddCustomerModal";
+import { CustomersTable } from "./CustomersTable/CustomersTable";
 import { Customer } from "../types";
+import { TableToolbar } from "./CustomersTable/TableToolbar";
+import { TableOverlay } from "./TableOverlay";
+import { useCustomersContext } from "../state/customersContext";
 
-const AddCustomerModalButtons = ({ onCancel }: any) => {
+type AddCustomerModalButtonsProps = {
+  onCancel: () => void;
+};
+
+const AddCustomerModalButtons = ({
+  onCancel,
+}: AddCustomerModalButtonsProps): React.JSX.Element => {
   return (
     <Stack direction="row" spacing={2}>
       <Button variant="contained" color="primary" type="submit">
@@ -30,23 +35,30 @@ export const CustomersSelection = () => {
   const [isAddNewCustomerModalOpen, setIsAddNewCustomerModalOpen] =
     useState(false);
   const [industryFilterValue, setIndustryFilterValue] = useState("");
+  const shouldRenderOverlay = isLoading || error;
 
-  const handleFilterInputChange = useCallback((event: any) => {
-    setIndustryFilterValue(event.target.value);
-  }, []);
+  const handleFilterInputChange = useCallback(
+    (event: FormEvent<HTMLInputElement>) => {
+      setIndustryFilterValue(event.currentTarget.value);
+    },
+    []
+  );
 
   const handleAddNewCustomerClick = useCallback(() => {
     setIsAddNewCustomerModalOpen(true);
   }, []);
 
-  const handleAddNewCustomer = useCallback((newCustomer: any) => {
-    addNewCustomer({
-      id: uuid(),
-      projects: [],
-      ...newCustomer,
-    });
-    setIsAddNewCustomerModalOpen(false);
-  }, []);
+  const handleAddNewCustomer = useCallback(
+    (newCustomer: Omit<Customer, "id" | "projects">) => {
+      addNewCustomer({
+        id: uuid(),
+        projects: [],
+        ...newCustomer,
+      });
+      setIsAddNewCustomerModalOpen(false);
+    },
+    [addNewCustomer]
+  );
 
   const byIndustry = (customer: Customer) => {
     if (industryFilterValue) {
@@ -58,31 +70,22 @@ export const CustomersSelection = () => {
   return (
     <Container component="section" fixed>
       <AddCustomerModal
-        title={`Add new customer`}
+        title={"Add new customer"}
         body={
           <AddCustomerForm
-            onFormSubmit={handleAddNewCustomer}
             formActions={
               <AddCustomerModalButtons
                 onCancel={() => setIsAddNewCustomerModalOpen(false)}
               />
             }
+            onFormSubmit={handleAddNewCustomer}
           />
         }
         isModalOpen={isAddNewCustomerModalOpen}
         onModalClose={() => setIsAddNewCustomerModalOpen(false)}
       />
-      {isLoading ? (
-        <Paper
-          elevation={2}
-          sx={{
-            width: "100%",
-            height: 600,
-            alignContent: "center",
-          }}
-        >
-          <Loader />
-        </Paper>
+      {shouldRenderOverlay ? (
+        <TableOverlay isLoading={isLoading} error={error} />
       ) : (
         <CustomersTable
           customers={customers.filter(byIndustry)}

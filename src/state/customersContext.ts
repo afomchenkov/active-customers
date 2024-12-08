@@ -1,9 +1,6 @@
 import { createContext, useContext } from "react";
 import { Customer } from "../types";
-
-const Noop = () => {};
-
-// export type CreateCustomerFields = {}
+import { Noop } from "../utils";
 
 export type CustomersState = {
   customers: Customer[];

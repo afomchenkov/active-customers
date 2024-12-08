@@ -1,10 +1,26 @@
+import { Controller, Control } from "react-hook-form";
 import { MenuItem } from "@mui/material";
 import Select from "@mui/material/Select";
-import { Controller } from "react-hook-form";
 
-export const SelectField = (props: any) => {
-  const { name, label, control, variant, color, rules, options } = props;
+type SelectFieldProps = {
+  name: string;
+  label: string;
+  control: Control<any>;
+  color?: "primary" | "secondary" | "info" | "success" | "warning";
+  variant?: "filled" | "outlined" | "standard";
+  rules?: Object;
+  options: { label: string; value: string; }[];
+};
 
+export const SelectField = ({
+  name,
+  label,
+  control,
+  variant,
+  color,
+  rules,
+  options,
+}: SelectFieldProps): React.JSX.Element => {
   return (
     <Controller
       name={name}
@@ -31,4 +47,4 @@ export const SelectField = (props: any) => {
       }}
     />
   );
-}
+};

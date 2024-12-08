@@ -1,4 +1,11 @@
-import { ReactNode, ReactElement, useEffect, useMemo, useState } from "react";
+import {
+  ReactNode,
+  ReactElement,
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
 import { CustomersContext, defaultCustomersState } from "./customersContext";
 import { useFetchCustomers } from "../hooks/useFetchCustomers";
 import { Customer } from "../types";
@@ -17,7 +24,7 @@ export const CustomersProvider: CustomersProviderType = ({ children }) => {
     }
   }, [loadedCustomers, isLoading, error]);
 
-  // change CRUD methods to API requests
+  // change CRUD functions to API requests
 
   const addNewCustomer = (newCustomerData: Customer) => {
     setCustomers((customers) => {
@@ -26,37 +33,43 @@ export const CustomersProvider: CustomersProviderType = ({ children }) => {
     });
   };
 
-  const editCustomer = (updatedCustomer: Customer) => {
-    const customerIdx = customers.findIndex(
-      (customer) => customer.id === updatedCustomer.id
-    );
+  const editCustomer = useCallback(
+    (updatedCustomer: Customer) => {
+      const customerIdx = customers.findIndex(
+        (customer) => customer.id === updatedCustomer.id
+      );
 
-    if (customerIdx >= 0) {
-      setCustomers((customers) => {
-        customers[customerIdx] = updatedCustomer;
-        return [...customers];
-      });
+      if (customerIdx >= 0) {
+        setCustomers((customers) => {
+          customers[customerIdx] = updatedCustomer;
+          return [...customers];
+        });
 
-      return true;
-    }
+        return true;
+      }
 
-    return false;
-  };
+      return false;
+    },
+    [customers]
+  );
 
-  const deleteCustomer = (id: string) => {
-    const customerIdx = customers.findIndex((customer) => customer.id === id);
+  const deleteCustomer = useCallback(
+    (id: string) => {
+      const customerIdx = customers.findIndex((customer) => customer.id === id);
 
-    if (customerIdx >= 0) {
-      setCustomers((customers) => {
-        customers.splice(customerIdx, 1);
-        return [...customers];
-      });
+      if (customerIdx >= 0) {
+        setCustomers((customers) => {
+          customers.splice(customerIdx, 1);
+          return [...customers];
+        });
 
-      return true;
-    }
+        return true;
+      }
 
-    return false;
-  };
+      return false;
+    },
+    [customers]
+  );
 
   const customersState = useMemo(() => {
     return {
@@ -68,7 +81,7 @@ export const CustomersProvider: CustomersProviderType = ({ children }) => {
       editCustomer,
       deleteCustomer,
     };
-  }, [customers, isLoading, error]);
+  }, [customers, isLoading, error, deleteCustomer, editCustomer]);
 
   return (
     <CustomersContext.Provider value={customersState}>

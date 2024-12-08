@@ -1,10 +1,22 @@
-import { Controller } from "react-hook-form";
+import { Controller, Control } from "react-hook-form";
 import Checkbox from "@mui/material/Checkbox";
 import { FormControlLabel, FormGroup } from "@mui/material";
 
-export const CheckboxField = (props: any) => {
-  const { name, label, control, rules } = props;
+type CheckboxFieldProps = {
+  name: string;
+  label: string;
+  control: Control<any>;
+  color?: "primary" | "secondary" | "info" | "success" | "warning" | "default";
+  rules?: Object;
+};
 
+export const CheckboxField = ({
+  name,
+  label,
+  control,
+  rules,
+  color = "default",
+}: CheckboxFieldProps): React.JSX.Element => {
   return (
     <Controller
       name={name}
@@ -15,7 +27,7 @@ export const CheckboxField = (props: any) => {
           <FormGroup>
             <FormControlLabel
               control={
-                <Checkbox {...field} checked={field.value} color="default" />
+                <Checkbox {...field} checked={field.value} color={color} />
               }
               label={label}
             />

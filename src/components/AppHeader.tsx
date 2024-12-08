@@ -3,7 +3,7 @@ import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 
-export const AppHeader = () => {
+export const AppHeader = (): React.JSX.Element => {
   return (
     <AppBar position="static">
       <Toolbar>

@@ -1,10 +1,10 @@
-import Divider from "@mui/material/Divider";
-import Typography from "@mui/material/Typography";
-import Modal from "@mui/material/Modal";
-
+import { ReactNode } from "react";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardActions from "@mui/material/CardActions";
+import Modal from "@mui/material/Modal";
+import Divider from "@mui/material/Divider";
+import Typography from "@mui/material/Typography";
 
 const style = {
   position: "absolute",
@@ -18,26 +18,40 @@ const style = {
   p: 3,
 };
 
-export const DeleteCustomerModal = ({
-  title,
+type AddCustomerModalProps = {
+  actions?: ReactNode;
+  body: ReactNode;
+  isModalOpen: boolean;
+  title: ReactNode;
+  onModalClose: () => void;
+};
+
+export const AddCustomerModal = ({
   actions,
-  onModalClose,
+  body,
   isModalOpen,
-}: any) => {
+  title,
+  onModalClose,
+}: AddCustomerModalProps): React.JSX.Element => {
   return (
     <Modal
+      aria-labelledby="add-customer-modal"
       open={isModalOpen}
       onClose={onModalClose}
-      aria-labelledby="modal-modal-title"
-      aria-describedby="modal-modal-description"
     >
       <Card sx={style}>
         <CardContent>
-          <Typography gutterBottom variant="h5" component="div">
+          <Typography
+            id="add-customer-modal"
+            gutterBottom
+            variant="h5"
+            component="div"
+          >
             {title}
           </Typography>
           <Divider />
         </CardContent>
+        <CardContent>{body}</CardContent>
         {actions && <CardActions>{actions}</CardActions>}
       </Card>
     </Modal>

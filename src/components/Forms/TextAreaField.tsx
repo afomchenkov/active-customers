@@ -1,9 +1,22 @@
+import { Controller, Control } from "react-hook-form";
 import { TextareaAutosize } from "@mui/material";
-import { Controller } from "react-hook-form";
 
-export const TextAreaField = (props: any) => {
-  const { name, control, color, rules, label } = props;
+type TextAreaFieldProps = {
+  name: string;
+  label: string;
+  control: Control<any>;
+  color?: "primary" | "secondary" | "info" | "success" | "warning" | "default";
+  variant?: "filled" | "outlined" | "standard";
+  rules?: Object;
+};
 
+export const TextAreaField = ({
+  name,
+  control,
+  color,
+  rules,
+  label,
+}: TextAreaFieldProps): React.JSX.Element => {
   return (
     <Controller
       name={name}
