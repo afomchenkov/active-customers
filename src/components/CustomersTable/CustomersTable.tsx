@@ -5,13 +5,14 @@ import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-
 import TablePagination from "@mui/material/TablePagination";
 
 import Paper from "@mui/material/Paper";
-
 import { CustomersTableRow } from "./CustomersTableRow";
 
+// import { Loader } from "../Loader";
+// import Box from "@mui/material/Box";
+// import Container from "@mui/material/Container";
 import { Customer } from "../../types";
 
 // interface Column {
@@ -39,8 +40,7 @@ import { Customer } from "../../types";
 //   },
 // ];
 
-// Add pagination
-export const CustomersTable = ({ customers }: { customers: Customer[] }) => {
+export const CustomersTable = ({ customers, toolbar }: { customers: Customer[], toolbar: any }) => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
 
@@ -57,16 +57,17 @@ export const CustomersTable = ({ customers }: { customers: Customer[] }) => {
 
   return (
     <Paper sx={{ width: "100%", overflow: "hidden" }}>
-      <TableContainer component={Paper} sx={{ maxHeight: 600 }}>
+      {toolbar}
+      <TableContainer component={Paper} sx={{ height: 500 }}>
         <Table stickyHeader aria-label="customers table">
           <TableHead>
             <TableRow>
               <TableCell />
               <TableCell>Company</TableCell>
-              <TableCell align="right">State</TableCell>
-              <TableCell align="right">Industry</TableCell>
-              <TableCell align="right">Projects number</TableCell>
-              <TableCell align="right">Action</TableCell>
+              <TableCell align="center">State</TableCell>
+              <TableCell align="center">Industry</TableCell>
+              <TableCell align="center">Projects number</TableCell>
+              <TableCell align="center">Action</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>

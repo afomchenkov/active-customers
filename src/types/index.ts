@@ -1,6 +1,6 @@
 import { Industry } from '../constants';
 
-export interface CustomerProject {
+export type CustomerProject = {
   id: string;
   name: string;
   contact: string;
@@ -8,7 +8,7 @@ export interface CustomerProject {
   end_date: string;
 }
 
-export interface Customer {
+export type Customer = {
   id: string;
   isActive: boolean;
   company: string;

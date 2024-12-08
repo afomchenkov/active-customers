@@ -3,25 +3,39 @@ import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-
+import Divider from "@mui/material/Divider";
 import Box from "@mui/material/Box";
 import Collapse from "@mui/material/Collapse";
+import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
 
 import { Customer } from "../../types";
 
 const parseDateString = (date: string) => new Date(date).toUTCString();
 
-export const CustomersTableProducts = ({ row, open }: { row: Customer; open: boolean }) => {
+export const CustomersTableProjects = ({
+  row,
+  open,
+}: {
+  row: Customer;
+  open: boolean;
+}) => {
   return (
     <TableRow>
       <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
         <Collapse in={open} timeout="auto" unmountOnExit>
           <Box sx={{ margin: 1 }}>
-            <Typography variant="h6" gutterBottom component="div">
+            <Typography variant="subtitle1" gutterBottom component="div">
+              About Company
+            </Typography>
+            <Paper elevation={0} sx={{ margin: 1 }}>
+              {row.about || "No data"}
+            </Paper>
+            <Divider />
+            <Typography variant="subtitle1" gutterBottom component="div">
               Projects
             </Typography>
-            <Table size="small" aria-label="purchases">
+            <Table sx={{ marginTop: 1 }} size="small" aria-label="purchases">
               <TableHead>
                 <TableRow>
                   <TableCell>Project name</TableCell>
