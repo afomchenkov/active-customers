@@ -6,6 +6,8 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 In the project directory, you can run:
 
+### `yarn install`
+
 ### `yarn start`
 
 Runs the app in the development mode.\
@@ -30,3 +32,7 @@ Your app is ready to be deployed!
 See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
 ### `yarn eject`
+
+<img width="1440" alt="Screenshot 2024-12-08 at 23 35 43" src="https://github.com/user-attachments/assets/c990345a-cb0c-4161-8179-05176e8df253">
+
+<img width="1434" alt="Screenshot 2024-12-08 at 23 35 23" src="https://github.com/user-attachments/assets/68270247-8fe6-4ca9-aac8-97993f6fe541">
