@@ -1,3 +1,4 @@
+// import { Fragment } from "react";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -20,47 +21,58 @@ export const CustomersTableProjects = ({
   row: Customer;
   open: boolean;
 }) => {
+  const { about, projects } = row;
+
   return (
-    <TableRow>
+    <TableRow sx={{ backgroundColor: "#e7e7e7" }}>
       <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
         <Collapse in={open} timeout="auto" unmountOnExit>
           <Box sx={{ margin: 1 }}>
             <Typography variant="subtitle1" gutterBottom component="div">
               About Company
             </Typography>
-            <Paper elevation={0} sx={{ margin: 1 }}>
-              {row.about || "No data"}
+            <Paper elevation={0} sx={{ margin: 1, backgroundColor: "inherit" }}>
+              {about || "No data"}
             </Paper>
             <Divider />
             <Typography variant="subtitle1" gutterBottom component="div">
               Projects
             </Typography>
-            <Table sx={{ marginTop: 1 }} size="small" aria-label="purchases">
-              <TableHead>
-                <TableRow>
-                  <TableCell>Project name</TableCell>
-                  <TableCell>Contact</TableCell>
-                  <TableCell align="right">Start date</TableCell>
-                  <TableCell align="right">End date</TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {row.projects.map((project) => (
-                  <TableRow key={project.id}>
-                    <TableCell component="th" scope="row">
-                      {project.name}
-                    </TableCell>
-                    <TableCell>{project.contact}</TableCell>
-                    <TableCell align="right">
-                      {parseDateString(project.start_date)}
-                    </TableCell>
-                    <TableCell align="right">
-                      {parseDateString(project.end_date)}
-                    </TableCell>
+            {!!projects.length ? (
+              <Table sx={{ marginTop: 1 }} size="small" aria-label="purchases">
+                <TableHead>
+                  <TableRow>
+                    <TableCell>Project name</TableCell>
+                    <TableCell>Contact</TableCell>
+                    <TableCell align="right">Start date</TableCell>
+                    <TableCell align="right">End date</TableCell>
                   </TableRow>
-                ))}
-              </TableBody>
-            </Table>
+                </TableHead>
+                <TableBody>
+                  {projects.map((project) => (
+                    <TableRow key={project.id}>
+                      <TableCell component="th" scope="row">
+                        {project.name}
+                      </TableCell>
+                      <TableCell>{project.contact}</TableCell>
+                      <TableCell align="right">
+                        {parseDateString(project.start_date)}
+                      </TableCell>
+                      <TableCell align="right">
+                        {parseDateString(project.end_date)}
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            ) : (
+              <Paper
+                elevation={0}
+                sx={{ margin: 1, backgroundColor: "inherit" }}
+              >
+                No data
+              </Paper>
+            )}
           </Box>
         </Collapse>
       </TableCell>

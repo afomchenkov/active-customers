@@ -21,8 +21,8 @@ export const TextAreaField = (props: any) => {
               padding: "0.8em",
             }}
             aria-label={label}
-            minRows={7}
-            maxRows={7}
+            minRows={6}
+            maxRows={6}
             color={color}
             {...field}
           />

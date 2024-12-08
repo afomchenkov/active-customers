@@ -4,7 +4,7 @@ import { CheckboxField } from "./CheckboxField";
 import { SelectField } from "./SelectField";
 import { TextField } from "./TextField";
 import { TextAreaField } from "./TextAreaField";
-import { industriesOptions } from "../../constants";
+import { Industry, industriesOptions } from "../../constants";
 
 type FormInputs = any;
 // {
@@ -12,19 +12,18 @@ type FormInputs = any;
 //   exampleRequired: string
 // }
 
-export const EditCustomerForm = ({ formActions, data, onFormSubmit }: any) => {
-  const { company, about, industry, isActive } = data;
+export const AddCustomerForm = ({ formActions, onFormSubmit }: any) => {
   const { handleSubmit, control } = useForm<FormInputs>({
     defaultValues: {
-      company,
-      industry,
-      isActive,
-      about,
+      company: "",
+      industry: Industry.Tech,
+      isActive: false,
+      about: "",
     },
   });
 
   const onSubmit: SubmitHandler<FormInputs> = (updatedData: any) => {
-    onFormSubmit({ ...data, ...updatedData });
+    onFormSubmit({ ...updatedData });
   };
 
   return (

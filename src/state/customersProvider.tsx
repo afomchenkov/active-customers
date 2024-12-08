@@ -17,9 +17,14 @@ export const CustomersProvider: CustomersProviderType = ({ children }) => {
     }
   }, [loadedCustomers, isLoading, error]);
 
-  // change CRUD methods with API requests
+  // change CRUD methods to API requests
 
-  const addNewCustomer = (newCustomerData: Customer) => {};
+  const addNewCustomer = (newCustomerData: Customer) => {
+    setCustomers((customers) => {
+      customers.unshift(newCustomerData);
+      return [...customers];
+    });
+  };
 
   const editCustomer = (updatedCustomer: Customer) => {
     const customerIdx = customers.findIndex(

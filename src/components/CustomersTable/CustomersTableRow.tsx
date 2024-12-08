@@ -14,10 +14,10 @@ import { useCustomersContext } from "../../state/customersContext";
 import { capitalize } from "../../utils";
 import { Customer } from "../../types";
 
-import { EditCustomerForm } from '../Forms/EditCustomerForm';
+import { EditCustomerForm } from "../Forms/EditCustomerForm";
 import { EditCustomerModal } from "../EditCustomerModal";
 
-export const DeleteCustomerModalButtons = ({ onCancel, onDelete }: any) => {
+const DeleteCustomerModalButtons = ({ onCancel, onDelete }: any) => {
   return (
     <Stack direction="row" spacing={2}>
       <Button
@@ -35,11 +35,11 @@ export const DeleteCustomerModalButtons = ({ onCancel, onDelete }: any) => {
   );
 };
 
-export const EditCustomerModalButtons = ({ onCancel, onConfirm }: any) => {
+const EditCustomerModalButtons = ({ onCancel }: any) => {
   return (
     <Stack direction="row" spacing={2}>
-      <Button variant="contained" color="primary" onClick={onConfirm} type="submit">
-        Edit
+      <Button variant="contained" color="primary" type="submit">
+        Submit
       </Button>
       <Button variant="outlined" onClick={onCancel}>
         Cancel
@@ -73,21 +73,23 @@ export const CustomersTableRow = (props: { row: Customer }) => {
   const handleCustomerEdit = (data: any) => {
     editCustomer(data);
     setIsEditModalOpen(false);
-  }
+  };
 
   return (
     <Fragment>
       <EditCustomerModal
         title={`Edit customer: "${row.company}"`}
-        body={<EditCustomerForm
-          data={row}
-          onFormSubmit={handleCustomerEdit}
-          formActions={
-          <EditCustomerModalButtons
-            onCancel={() => setIsEditModalOpen(false)}
-            onEdit={() => console.log(row)}
+        body={
+          <EditCustomerForm
+            data={row}
+            onFormSubmit={handleCustomerEdit}
+            formActions={
+              <EditCustomerModalButtons
+                onCancel={() => setIsEditModalOpen(false)}
+              />
+            }
           />
-        }/>}
+        }
         isModalOpen={isEditModalOpen}
         onModalClose={() => setIsEditModalOpen(false)}
       />
@@ -104,19 +106,17 @@ export const CustomersTableRow = (props: { row: Customer }) => {
       />
       <TableRow sx={{ "& > *": { borderBottom: "unset" } }} hover>
         <TableCell>
-          {!!row.projects.length && (
-            <IconButton
-              aria-label="expand row"
-              size="small"
-              onClick={() => setIsProjectsOpen(!isProjectsOpen)}
-            >
-              {isProjectsOpen ? (
-                <KeyboardArrowUpIcon />
-              ) : (
-                <KeyboardArrowDownIcon />
-              )}
-            </IconButton>
-          )}
+          <IconButton
+            aria-label="expand row"
+            size="small"
+            onClick={() => setIsProjectsOpen(!isProjectsOpen)}
+          >
+            {isProjectsOpen ? (
+              <KeyboardArrowUpIcon />
+            ) : (
+              <KeyboardArrowDownIcon />
+            )}
+          </IconButton>
         </TableCell>
         <TableCell component="th" scope="row">
           {row.company}
