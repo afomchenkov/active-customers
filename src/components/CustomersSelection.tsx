@@ -21,7 +21,7 @@ const AddCustomerModalButtons = ({
   return (
     <Stack direction="row" spacing={2}>
       <Button variant="contained" color="primary" type="submit">
-        Submit
+        Add
       </Button>
       <Button variant="outlined" onClick={onCancel}>
         Cancel

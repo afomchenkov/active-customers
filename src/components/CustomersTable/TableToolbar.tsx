@@ -23,7 +23,7 @@ export const TableToolbar = ({
 }: TableToolbarProps): React.JSX.Element => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const isPopperOpen = Boolean(anchorEl);
-  const id = isPopperOpen ? "simple-popper" : undefined;
+  const id = isPopperOpen ? "filter-by-industry" : undefined;
 
   const handleFilterClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(anchorEl ? null : event.currentTarget);

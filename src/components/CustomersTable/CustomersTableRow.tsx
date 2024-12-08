@@ -1,23 +1,41 @@
 import { Fragment, useState } from "react";
-import TableCell from "@mui/material/TableCell";
-import TableRow from "@mui/material/TableRow";
-import IconButton from "@mui/material/IconButton";
-import DeleteIcon from "@mui/icons-material/Delete";
+import styled from "styled-components";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
-import Stack from "@mui/material/Stack";
+import DeleteIcon from "@mui/icons-material/Delete";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
+import IconButton from "@mui/material/IconButton";
+import Stack from "@mui/material/Stack";
+import TableCell from "@mui/material/TableCell";
+import TableRow from "@mui/material/TableRow";
 import { CustomersTableProjects } from "./CustomersTableProjects";
 import { DeleteCustomerModal } from "../Modals/DeleteCustomerModal";
+import { EditCustomerForm } from "../Forms/EditCustomerForm";
+import { EditCustomerModal } from "../Modals/EditCustomerModal";
 import { useCustomersContext } from "../../state/customersContext";
 import { capitalize } from "../../utils";
 import { Customer } from "../../types";
 
-import { EditCustomerForm } from "../Forms/EditCustomerForm";
-import { EditCustomerModal } from "../Modals/EditCustomerModal";
+const ActiveStateLabel = styled.span`
+  color: #156c15;
+  font-weight: 800;
+`;
 
-const DeleteCustomerModalButtons = ({ onCancel, onDelete }: any) => {
+const InactiveStateLabel = styled.span`
+  color: #e42d2d;
+  font-weight: 800;
+`;
+
+type DeleteCustomerModalButtonsProps = {
+  onCancel: () => void;
+  onDelete: () => void;
+};
+
+const DeleteCustomerModalButtons = ({
+  onCancel,
+  onDelete,
+}: DeleteCustomerModalButtonsProps): React.JSX.Element => {
   return (
     <Stack direction="row" spacing={2}>
       <Button
@@ -35,11 +53,17 @@ const DeleteCustomerModalButtons = ({ onCancel, onDelete }: any) => {
   );
 };
 
-const EditCustomerModalButtons = ({ onCancel }: any) => {
+type EditCustomerModalButtonsProps = {
+  onCancel: () => void;
+};
+
+const EditCustomerModalButtons = ({
+  onCancel,
+}: EditCustomerModalButtonsProps): React.JSX.Element => {
   return (
     <Stack direction="row" spacing={2}>
       <Button variant="contained" color="primary" type="submit">
-        Submit
+        Save
       </Button>
       <Button variant="outlined" onClick={onCancel}>
         Cancel
@@ -48,8 +72,13 @@ const EditCustomerModalButtons = ({ onCancel }: any) => {
   );
 };
 
-export const CustomersTableRow = (props: { row: Customer }) => {
-  const { row } = props;
+type CustomersTableRowProps = {
+  row: Customer;
+};
+
+export const CustomersTableRow = ({
+  row,
+}: CustomersTableRowProps): React.JSX.Element => {
   const [isProjectsOpen, setIsProjectsOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
@@ -70,8 +99,8 @@ export const CustomersTableRow = (props: { row: Customer }) => {
     setIsEditModalOpen(true);
   };
 
-  const handleCustomerEdit = (data: any) => {
-    editCustomer(data);
+  const handleCustomerEdit = (updatedCustomer: Customer) => {
+    editCustomer(updatedCustomer);
     setIsEditModalOpen(false);
   };
 
@@ -107,7 +136,7 @@ export const CustomersTableRow = (props: { row: Customer }) => {
       <TableRow sx={{ "& > *": { borderBottom: "unset" } }} hover>
         <TableCell>
           <IconButton
-            aria-label="expand row"
+            aria-label="expand company row"
             size="small"
             onClick={() => setIsProjectsOpen(!isProjectsOpen)}
           >
@@ -123,9 +152,9 @@ export const CustomersTableRow = (props: { row: Customer }) => {
         </TableCell>
         <TableCell align="center">
           {row.isActive ? (
-            <span>Active</span>
+            <ActiveStateLabel>Active</ActiveStateLabel>
           ) : (
-            <span style={{ color: "#e42d2d", fontWeight: 800 }}>Inactive</span>
+            <InactiveStateLabel>Inactive</InactiveStateLabel>
           )}
         </TableCell>
         <TableCell align="center">{capitalize(row.industry)}</TableCell>
