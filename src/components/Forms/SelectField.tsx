@@ -37,7 +37,7 @@ export const SelectField = ({
             error={hasError}
             value={field.value || ""}
           >
-            {options.map((option: any) => (
+            {options.map((option) => (
               <MenuItem key={option.value} value={option.value}>
                 {option.label}
               </MenuItem>
