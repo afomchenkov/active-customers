@@ -59,7 +59,7 @@ export const CustomersTableProjects = ({
 
   return (
     <TableRow sx={{ backgroundColor: "#e7e7e7" }}>
-      <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
+      <TableCell sx={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
         <Collapse in={open} timeout="auto" unmountOnExit>
           <Box sx={{ margin: 1 }}>
             <Typography variant="subtitle1" gutterBottom component="div">

@@ -3,11 +3,10 @@ import { v4 as uuid } from "uuid";
 import Container from "@mui/material/Container";
 import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
-import { AddCustomerForm } from "./Forms/AddCustomerForm";
-import { AddCustomerModal } from "./Modals/AddCustomerModal";
-import { CustomersTable } from "./CustomersTable/CustomersTable";
+import { AddCustomerForm } from "./Forms";
+import { AddCustomerModal } from "./Modals";
+import { CustomersTable, TableToolbar } from "./CustomersTable";
 import { Customer } from "../types";
-import { TableToolbar } from "./CustomersTable/TableToolbar";
 import { TableOverlay } from "./TableOverlay";
 import { useCustomersContext } from "../state/customersContext";
 
