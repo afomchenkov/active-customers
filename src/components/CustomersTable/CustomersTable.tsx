@@ -14,8 +14,8 @@ import { Customer } from "../../types";
 type CustomersTableColumn = {
   id: "company" | "state" | "industry" | "projects" | "actions" | "toggler";
   label: string;
-  minWidth?: number;
-  align?: "left" | "right" | "center";
+  width?: number | string;
+  align?: "left" | "right" | "center" | "justify";
   format?: (value: number) => string;
   valueGetter?: (value: number, row: Customer) => string;
 };
@@ -26,24 +26,25 @@ type CustomersTableProps = {
 };
 
 const columns: readonly CustomersTableColumn[] = [
-  { id: "toggler", label: "", minWidth: 60 },
-  { id: "company", label: "Company", align: "left", minWidth: 170 },
-  { id: "state", label: "State", align: "center", minWidth: 100 },
+  { id: "toggler", label: "", width: '60px' },
+  { id: "company", label: "Company", align: "left", width: '220px' },
+  { id: "state", label: "State", align: "center", width: '100px' },
   {
     id: "industry",
     label: "Industry",
-    minWidth: 170,
+    width: '170px',
     align: "center",
   },
   {
     id: "projects",
     label: "Projects number",
-    minWidth: 100,
+    width: '100px',
     align: "center",
   },
   {
     id: "actions",
     label: "Actions",
+    width: '3em',
     align: "center",
   },
 ];
@@ -78,7 +79,7 @@ export const CustomersTable = ({
                 variant="head"
                   key={column.id}
                   align={column.align}
-                  sx={{ minWidth: column.minWidth }}
+                  sx={{ width: column.width }}
                 >
                   {column.label}
                 </TableCell>
